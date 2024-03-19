@@ -3,11 +3,11 @@ package nz.ac.auckland.se281;
 public class Venue {
   private String venueName;
   private String venueCode;
-  private int capacity;
-  private int hireFee;
+  private String capacity;
+  private String hireFee;
 
 
-  public Venue(String venueName, String venueCode, int capacity, int hireFee) {
+  public Venue(String venueName, String venueCode, String capacity, String hireFee) {
     this.venueName = venueName;
     this.venueCode = venueCode;
     this.capacity = capacity;
@@ -22,11 +22,11 @@ public class Venue {
     return venueCode;
   }
 
-  public int getCapacity() {
+  public String getCapacity() {
     return capacity;
   }
 
-  public int getHireFee() {
+  public String getHireFee() {
     return hireFee;
   }
 
