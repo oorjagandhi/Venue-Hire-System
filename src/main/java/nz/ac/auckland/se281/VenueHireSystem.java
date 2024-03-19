@@ -30,12 +30,34 @@ public class VenueHireSystem {
       System.out.println("Venue not created: venue name must not be empty.");
     } 
     
+    // Checking if the venue codes has already been used
     for (Venue venue : venues){
       if (venue.getVenueCode().equals(venueCode)){
         System.out.println("Venue not created: code '" + venueCode + "' is already used for '" + venue.getVenueName() + "'.");
         return;
       }
+    }
 
+    // Check if the capacity is a number and is positive
+    try {
+      int tempCapacity = Integer.parseInt(capacityInput);
+      if (tempCapacity <= 0){
+        System.out.println("Venue not created: capacity must be a positive number.");
+        return;
+      }
+    } catch (Exception e){
+      System.out.println("Venue not created: capacity must be a number.");
+    }
+
+    // Check if the hire fee is a number and is positive
+    try {
+      int tempHireFee = Integer.parseInt(hireFeeInput);
+      if (tempHireFee <= 0){
+        System.out.println("Venue not created: hire fee must be a positive number.");
+        return;
+      }
+    } catch (Exception e){
+      System.out.println("Venue not created: hire fee must be a number.");
     }
     
   }
