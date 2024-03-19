@@ -16,7 +16,7 @@ public class VenueHireSystem {
       System.out.println("There are no venues in the system. Please create a venue first.");
     } else if (venues.size() == 1){
       System.out.println("There is one venue in the system:");
-    } else if (venues.size() > 10){
+    } else if (venues.size() < 10){
       System.out.println("There are " + digitToWords(venues.size()) + " venues in the system:");
     } else {
       System.out.println("There are " + venues.size() + " venues in the system:");
