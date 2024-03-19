@@ -14,13 +14,28 @@ public class VenueHireSystem {
   public void printVenues() {
     if (venues.isEmpty()){
       System.out.println("There are no venues in the system. Please create a venue first.");
+    } else if (venues.size() == 1){
+      System.out.println("There is one venue in the system:");
+    } else if (venues.size() > 10){
+      System.out.println("There are " + digitToWords(venues.size()) + " venues in the system:");
+    } else {
+      System.out.println("There are " + venues.size() + " venues in the system:");
     }
-    // TODO implement this method
   }
+
+  private String digitToWords(int num) {
+    String[] words = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+    if (num > 1 && num < 10){
+      return words[num];
+    }
+    return Integer.toString(num);
+  }
+
+
+
 
   public void createVenue(
       String venueName, String venueCode, String capacityInput, String hireFeeInput) {
-    // TODO implement this method
     if (venueName.trim().isEmpty()){
       System.out.println("Venue not created: venue name must not be empty.");
     } 
@@ -53,7 +68,6 @@ public class VenueHireSystem {
     }
     
     Venue newVenue = new Venue(venueName, venueCode, capacityInput, hireFeeInput);
-        
     venues.add(newVenue);
     System.out.println("Successfully created venue '" + venueName + "' (" + venueCode + ").");
 
