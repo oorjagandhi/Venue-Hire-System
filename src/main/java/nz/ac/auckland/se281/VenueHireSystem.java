@@ -21,6 +21,10 @@ public class VenueHireSystem {
     } else {
       System.out.println("There are " + venues.size() + " venues in the system:");
     }
+
+    for (Venue venue : venues){
+      System.out.println("  * " + venue.getVenueName() + " (" + venue.getVenueCode() + ") - " + venue.getCapacity() + " people - $" + venue.getHireFee() + " base hire fee. Next available on");
+    }
   }
 
   private String digitToWords(int num) {
