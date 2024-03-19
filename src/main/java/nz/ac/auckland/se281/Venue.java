@@ -13,8 +13,23 @@ public class Venue {
     this.capacity = capacity;
     this.hireFee = hireFee;
   }
-
   
+  public String getVenueName() {
+    return venueName;
+  }
+
+  public String getVenueCode() {
+    return venueCode;
+  }
+
+  public int getCapacity() {
+    return capacity;
+  }
+
+  public int getHireFee() {
+    return hireFee;
+  }
+
 
   
 }
