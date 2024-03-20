@@ -39,9 +39,10 @@ public class VenueHireSystem {
 
 
   public void createVenue(
-      String venueName, String venueCode, String capacityInput, String hireFeeInput) {
-    if (venueName.trim().isEmpty()){
+    String venueName, String venueCode, String capacityInput, String hireFeeInput) {
+    if (venueName == null || venueName.trim().isEmpty()){
       System.out.println("Venue not created: venue name must not be empty.");
+      return;
     } 
     
     for (Venue venue : venues){
