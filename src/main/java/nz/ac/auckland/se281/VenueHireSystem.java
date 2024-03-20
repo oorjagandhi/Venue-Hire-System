@@ -60,6 +60,7 @@ public class VenueHireSystem {
       }
     } catch (Exception e){
       System.out.println("Venue not created: capacity must be a number.");
+      return;
     }
 
     try {
@@ -70,6 +71,7 @@ public class VenueHireSystem {
       }
     } catch (Exception e){
       System.out.println("Venue not created: hire fee must be a number.");
+      return;
     }
     
     Venue newVenue = new Venue(venueName, venueCode, capacityInput, hireFeeInput);
