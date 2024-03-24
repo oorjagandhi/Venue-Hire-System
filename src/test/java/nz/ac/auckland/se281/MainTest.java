@@ -165,7 +165,16 @@ public class MainTest {
 
         assertDoesNotContain("There is", true);
         assertDoesNotContain("9 venues", true);
-    }
+      }
+
+      @Test
+        public void T1_010_invalid_duplicate_venuecodes() throws Exception {
+          runCommands(unpack(CREATE_DUPLICATE_VENUE_CODES, PRINT_VENUES));
+          assertContains("Venue not created: code 'FFH' is already used for 'Frugal Fiesta Hall'.");
+
+          assertContains("one venue");
+          assertDoesNotContain("two venues", true);
+      }
 
 
     }
@@ -795,6 +804,19 @@ public class MainTest {
         "2500", //
       };
 
+      private static final Object[] CREATE_DUPLICATE_VENUE_CODES =
+      new Object[] {
+        CREATE_VENUE,
+        "'Frugal Fiesta Hall'",
+        "FFH",
+        "80",
+        "250", //
+        CREATE_VENUE,
+        "'Comfy Corner Events Centre'",
+        "FFH",
+        "120",
+        "500", //
+      };
   private static final Object[] CREATE_TEN_VENUES =
       unpack(CREATE_NINE_VENUES, CREATE_VENUE, "'Majestic Monarch Mansion'", "MMM", "1000", "2500");
 
