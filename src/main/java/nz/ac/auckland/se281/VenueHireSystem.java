@@ -59,29 +59,29 @@ public class VenueHireSystem {
       }
     }
 
-    // Check if the capacity and hire fee are numbers
+    // Check if the capacity is positive
     try {
       int tempCapacity = Integer.parseInt(capacityInput);
       if (tempCapacity <= 0){
-        MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("Venue not created: capacity must be a positive number.");
+        MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", " positive");
         return;
       }
       // Check if the capacity is a number
     } catch (Exception e){
-      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("Venue not created: capacity must be a number.");
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", "");
       return;
     }
 
-    // Check if the hire fee is a number
+    // Check if the hire fee is a positive number
     try {
       int tempHireFee = Integer.parseInt(hireFeeInput);
       if (tempHireFee <= 0){
-        MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("Venue not created: hire fee must be a positive number.");
+        MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", " positive");
         return;
       }
       // Check if the hire fee is a number
     } catch (Exception e){
-      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("Venue not created: hire fee must be a number.");
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", "");
       return;
     }
     
