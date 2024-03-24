@@ -11,22 +11,28 @@ public class VenueHireSystem {
 
   public VenueHireSystem() {}
 
+  // Print the list of venues
   public void printVenues() {
     if (venues.isEmpty()){
-      System.out.println("There are no venues in the system. Please create a venue first.");
+      // Print message if there are no venues
+      MessageCli.NO_VENUES.printMessage();
     } else if (venues.size() == 1){
-      System.out.println("There is one venue in the system:");
+      // Print message if there is one venue
+      MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
     } else if (venues.size() < 10){
-      System.out.println("There are " + digitToWords(venues.size()) + " venues in the system:");
+      // Print message if there are less than 10 venues
+      MessageCli.NUMBER_VENUES.printMessage("are", digitToWords(venues.size()), "s");
     } else {
-      System.out.println("There are " + venues.size() + " venues in the system:");
+      // Print message if there are 10 or more venues
+      MessageCli.NUMBER_VENUES.printMessage("are", Integer.toString(venues.size()), "s");
     }
 
+    // Print the details of each venue
     for (Venue venue : venues){
-      System.out.println("  * " + venue.getVenueName() + " (" + venue.getVenueCode() + ") - " + venue.getCapacity() + " people - $" + venue.getHireFee() + " base hire fee. Next available on");
+      MessageCli.VENUE_ENTRY.printMessage(venue.getVenueName(), venue.getVenueCode(), venue.getCapacity(), venue.getHireFee());
     }
   }
-
+  // Convert a number to words
   private String digitToWords(int num) {
     String[] words = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
     if (num > 1 && num < 10){
@@ -37,47 +43,52 @@ public class VenueHireSystem {
 
 
 
-
-  public void createVenue(
-    String venueName, String venueCode, String capacityInput, String hireFeeInput) {
+  // Method to create a new venue
+  public void createVenue(String venueName, String venueCode, String capacityInput, String hireFeeInput) {
+    // Check if the venue name is empty
     if (venueName == null || venueName.trim().isEmpty()){
-      System.out.println("Venue not created: venue name must not be empty.");
+      MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
       return;
     } 
     
+    // Check if the venue code already exists
     for (Venue venue : venues){
       if (venue.getVenueCode().equals(venueCode)){
-        System.out.println("Venue not created: code '" + venueCode + "' is already used for '" + venue.getVenueName() + "'.");
+        MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, venue.getVenueName());
         return;
       }
     }
 
+    // Check if the capacity and hire fee are numbers
     try {
       int tempCapacity = Integer.parseInt(capacityInput);
       if (tempCapacity <= 0){
-        System.out.println("Venue not created: capacity must be a positive number.");
+        MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("Venue not created: capacity must be a positive number.");
         return;
       }
+      // Check if the capacity is a number
     } catch (Exception e){
-      System.out.println("Venue not created: capacity must be a number.");
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("Venue not created: capacity must be a number.");
       return;
     }
 
+    // Check if the hire fee is a number
     try {
       int tempHireFee = Integer.parseInt(hireFeeInput);
       if (tempHireFee <= 0){
-        System.out.println("Venue not created: hire fee must be a positive number.");
+        MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("Venue not created: hire fee must be a positive number.");
         return;
       }
+      // Check if the hire fee is a number
     } catch (Exception e){
-      System.out.println("Venue not created: hire fee must be a number.");
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("Venue not created: hire fee must be a number.");
       return;
     }
     
+    // If all validations passed, create the venue
     Venue newVenue = new Venue(venueName, venueCode, capacityInput, hireFeeInput);
     venues.add(newVenue);
-    System.out.println("Successfully created venue '" + venueName + "' (" + venueCode + ").");
-
+    MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
   }
 
   public void setSystemDate(String dateInput) {
