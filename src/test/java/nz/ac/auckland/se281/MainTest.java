@@ -168,15 +168,61 @@ public class MainTest {
       }
 
       @Test
-        public void T1_010_invalid_duplicate_venuecodes() throws Exception {
-          runCommands(unpack(CREATE_DUPLICATE_VENUE_CODES, PRINT_VENUES));
-          assertContains("Venue not created: code 'FFH' is already used for 'Frugal Fiesta Hall'.");
+      public void T1_010_invalid_duplicate_venuecodes() throws Exception {
+        runCommands(unpack(CREATE_DUPLICATE_VENUE_CODES, PRINT_VENUES));
+        assertContains("Venue not created: code 'FFH' is already used for 'Frugal Fiesta Hall'.");
 
-          assertContains("one venue");
-          assertDoesNotContain("two venues", true);
+        assertContains("one venue");
+        assertDoesNotContain("two venues", true);
       }
 
+      @Test
+      public void T1_11_invalid_hire_fee_negative() throws Exception {
+        runCommands(CREATE_VENUE, "'Frugal Fiesta Hall'", "FFH", "1", "-150");
+        System.out.println();
+        assertContains("Venue not created: hire fee must be a positive number.");
+        assertDoesNotContain("Successfully created venue", true);
+      }
 
+      @Test
+      public void T1_12_invalid_hire_fee_zero() throws Exception {
+        runCommands(CREATE_VENUE, "'Frugal Fiesta Hall'", "FFH", "1", "0");
+        System.out.println();
+        assertContains("Venue not created: hire fee must be a positive number.");
+        assertDoesNotContain("Successfully created venue", true);
+      }
+
+      @Test
+      public void T1_13_invalid_hire_fee_not_number() throws Exception {
+        runCommands(CREATE_VENUE, "'Frugal Fiesta Hall'", "FFH", "50", "eighty");
+
+        assertContains("Venue not created: hire fee must be a number.");
+        assertDoesNotContain("Successfully created venue", true);
+      }
+
+      @Test
+      public void T1_14_invalid_capacity_not_number() throws Exception {
+        runCommands(CREATE_VENUE, "'Frugal Fiesta Hall'", "FFH", "eighty", "50");
+
+        assertContains("Venue not created: capacity must be a number.");
+        assertDoesNotContain("Successfully created venue", true);
+      }
+
+      @Test
+      public void T1_15_invalid_capacity_zero() throws Exception {
+        runCommands(CREATE_VENUE, "'Frugal Fiesta Hall'", "FFH", "0", "50");
+
+        assertContains("Venue not created: capacity must be a positive number.");
+        assertDoesNotContain("Successfully created venue", true);
+      }
+
+      @Test
+      public void T1_16_invalid_capacity_negative() throws Exception {
+        runCommands(CREATE_VENUE, "'Frugal Fiesta Hall'", "FFH", "-100", "150");
+        System.out.println();
+        assertContains("Venue not created: capacity must be a positive number.");
+        assertDoesNotContain("Successfully created venue", true);
+      }
     }
   }
 
@@ -804,7 +850,7 @@ public class MainTest {
         "2500", //
       };
 
-      private static final Object[] CREATE_DUPLICATE_VENUE_CODES =
+  private static final Object[] CREATE_DUPLICATE_VENUE_CODES =
       new Object[] {
         CREATE_VENUE,
         "'Frugal Fiesta Hall'",
