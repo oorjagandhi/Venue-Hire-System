@@ -7,6 +7,8 @@ import nz.ac.auckland.se281.Types.FloralType;
 public class VenueHireSystem {
 
   ArrayList<Venue> venues = new ArrayList<Venue>();
+  ArrayList<Booking> bookings = new ArrayList<Booking>();
+
   private Date systemDate = null;
 
   public VenueHireSystem() {}
@@ -142,11 +144,31 @@ public class VenueHireSystem {
     // Converting the input date into a Date object
     Date bookingDate = new Date(options[1]);
 
-    // Check if the venue date is after the system date
+    // Check if the booking date is after the system date
     if (bookingDate.isBefore(systemDate)) {
       MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], systemDate.toString());
       return;
     }
+
+    // Check if the booking date is already booked
+    for (Booking booking : bookings) {
+      if (booking.getBookingDate().isEqual(bookingDate)) {
+        MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(
+            bookingVenue.getVenueName(), bookingDate.toString());
+        return;
+      }
+    }
+
+    // If all validations passed, create the booking
+    Booking newBooking = new Booking(bookingVenue, bookingDate, options[2], options[3]);
+
+    bookings.add(newBooking);
+
+    MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
+        newBooking.getBookingReference(),
+        newBooking.getVenue().getVenueName(),
+        newBooking.getBookingDate().toString(),
+        Integer.toString(newBooking.getAttendees()));
   }
 
   public void printBookings(String venueCode) {
