@@ -96,13 +96,7 @@ public class VenueHireSystem {
 
   // Setting the system date
   public void setSystemDate(String date) {
-
-    String[] dateParts = date.split("/");
-
-    int day = Integer.parseInt(dateParts[0]);
-    int month = Integer.parseInt(dateParts[1]);
-    int year = Integer.parseInt(dateParts[2]);
-    systemDate = new Date(day, month, year);
+    systemDate = new Date(date);
     MessageCli.DATE_SET.printMessage(systemDate.toString());
   }
 
@@ -145,7 +139,14 @@ public class VenueHireSystem {
       return;
     }
 
-    // Check if the date is in the past
+    // Converting the input date into a Date object
+    Date bookingDate = new Date(options[1]);
+
+    // Check if the venue date is after the system date
+    if (bookingDate.isBefore(systemDate)) {
+      MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], systemDate.toString());
+      return;
+    }
   }
 
   public void printBookings(String venueCode) {
