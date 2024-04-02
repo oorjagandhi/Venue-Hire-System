@@ -94,11 +94,13 @@ public class VenueHireSystem {
     MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
   }
 
+  // Setting the system date
   public void setSystemDate(String dateInput) {
     this.systemDate = dateInput;
     MessageCli.DATE_SET.printMessage(dateInput);
   }
 
+  // Printing the system date
   public void printSystemDate() {
     if (systemDate == null) {
       System.out.println("Current system date is not set.");
@@ -107,17 +109,34 @@ public class VenueHireSystem {
     }
   }
 
+  // Making a booking
   public void makeBooking(String[] options) {
     // TODO implement this method
-    // if (systemDate == null) {
-    //   MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
-    // }
+    // Check if the system date is set
+    if (systemDate == null) {
+      MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
+      return;
+    }
 
-    // if (venues.isEmpty()) {
-    //   MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
-    // }
+    // Check if there are venues
+    if (venues.isEmpty()) {
+      MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
+      return;
+    }
 
-    // if (venue)
+    // Check to see if the venue code exists
+    Venue bookingVenue = null;
+    for (Venue venue : venues) {
+      if (venue.getVenueCode().equals(options[0])) {
+        bookingVenue = venue;
+        break;
+      }
+    }
+
+    if (bookingVenue == null) {
+      MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(options[0]);
+      return;
+    }
   }
 
   public void printBookings(String venueCode) {
