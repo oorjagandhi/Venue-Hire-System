@@ -17,18 +17,32 @@ public class Date {
     if (this.year > otherDate.year) {
       return false;
     }
-
     // Checking if the month is  after
     if (this.month > otherDate.month) {
       return false;
     }
-
     // Checking if the day is  after
     if (this.day > otherDate.day) {
       return false;
     }
-
     // Return true if the date is before
+    return true;
+  }
+
+  public boolean isEqual(Date otherDate) {
+    // Checking if the year is equal
+    if (this.year != otherDate.year) {
+      return false;
+    }
+    // Checking if the month is equal
+    if (this.month != otherDate.month) {
+      return false;
+    }
+    // Checking if the day is equal
+    if (this.day != otherDate.day) {
+      return false;
+    }
+    // Return true if the date is equal
     return true;
   }
 
