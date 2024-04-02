@@ -7,7 +7,7 @@ import nz.ac.auckland.se281.Types.FloralType;
 public class VenueHireSystem {
 
   ArrayList<Venue> venues = new ArrayList<Venue>();
-  private String systemDate = null;
+  private Date systemDate = null;
 
   public VenueHireSystem() {}
 
@@ -95,9 +95,15 @@ public class VenueHireSystem {
   }
 
   // Setting the system date
-  public void setSystemDate(String dateInput) {
-    this.systemDate = dateInput;
-    MessageCli.DATE_SET.printMessage(dateInput);
+  public void setSystemDate(String date) {
+
+    String[] dateParts = date.split("/");
+
+    int day = Integer.parseInt(dateParts[0]);
+    int month = Integer.parseInt(dateParts[1]);
+    int year = Integer.parseInt(dateParts[2]);
+    systemDate = new Date(day, month, year);
+    MessageCli.DATE_SET.printMessage(systemDate.toString());
   }
 
   // Printing the system date
@@ -105,7 +111,7 @@ public class VenueHireSystem {
     if (systemDate == null) {
       System.out.println("Current system date is not set.");
     } else {
-      MessageCli.CURRENT_DATE.printMessage(systemDate);
+      MessageCli.CURRENT_DATE.printMessage(systemDate.toString());
     }
   }
 
@@ -133,10 +139,13 @@ public class VenueHireSystem {
       }
     }
 
+    // If the venue code does not exist, print error message.
     if (bookingVenue == null) {
       MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(options[0]);
       return;
     }
+
+    // Check if the date is in the past
   }
 
   public void printBookings(String venueCode) {
