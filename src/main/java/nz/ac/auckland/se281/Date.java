@@ -14,16 +14,14 @@ public class Date {
 
   public boolean isBefore(Date otherDate) {
     // Checking if the year is after
-    if (this.year > otherDate.year) {
-      return false;
-    }
-    // Checking if the month is  after
-    if (this.month > otherDate.month) {
-      return false;
-    }
-    // Checking if the day is  after
-    if (this.day > otherDate.day) {
-      return false;
+    if (this.year < otherDate.year) {
+      return true;
+    } else if (this.year == otherDate.year && this.month < otherDate.month) {
+      return true;
+    } else if (this.year == otherDate.year
+        && this.month == otherDate.month
+        && this.day < otherDate.day) {
+      return true;
     }
     // Return true if the date is before
     return true;
