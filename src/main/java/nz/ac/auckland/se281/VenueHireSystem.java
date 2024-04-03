@@ -31,12 +31,19 @@ public class VenueHireSystem {
 
     // Print the details of each venue
     for (Venue venue : venues) {
+      Date nextAvailableDate = venue.getNextAvailableDate(bookings, systemDate);
+      String nextAvailableDateStr;
+      if (nextAvailableDate == null) {
+        nextAvailableDateStr = "";
+      } else {
+        nextAvailableDateStr = nextAvailableDate.toString();
+      }
       MessageCli.VENUE_ENTRY.printMessage(
           venue.getVenueName(),
           venue.getVenueCode(),
           venue.getCapacity(),
           venue.getHireFee(),
-          venue.getNextAvailableDate(bookings, systemDate).toString());
+          nextAvailableDateStr);
     }
   }
 
@@ -164,8 +171,24 @@ public class VenueHireSystem {
       }
     }
 
+    // Adjusting the attendees if the number of attendees is less than 25% of capacity
+    int attendees = Integer.parseInt(options[3]);
+    int capacity = Integer.parseInt(bookingVenue.getCapacity());
+    if (attendees < 0.25 * capacity) {
+      attendees = (int) (0.25 * capacity);
+      MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
+          options[3], Integer.toString(attendees), Integer.toString(capacity));
+    }
+
+    // Adjusting the attendees if the number of attendees is more than 100% of the capacity
+    if (attendees > capacity) {
+      attendees = capacity;
+      MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
+          options[3], Integer.toString(attendees), Integer.toString(capacity));
+    }
+
     // If all validations passed, create the booking
-    Booking newBooking = new Booking(bookingVenue, bookingDate, options[2], options[3]);
+    Booking newBooking = new Booking(bookingVenue, bookingDate, options[2], attendees);
 
     bookings.add(newBooking);
     MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
