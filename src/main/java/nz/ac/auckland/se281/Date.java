@@ -12,6 +12,12 @@ public class Date {
     this.year = Integer.parseInt(dateParts[2]);
   }
 
+  public Date(int day, int month, int year) {
+    this.day = day;
+    this.month = month;
+    this.year = year;
+  }
+
   public boolean isBefore(Date otherDate) {
     // Checking if the year is after
     if (this.year < otherDate.year) {
@@ -42,6 +48,11 @@ public class Date {
     }
     // Return true if the date is equal
     return true;
+  }
+
+  // Increment the date by one day
+  public Date increment() {
+    return new Date(this.day + 1, this.month, this.year);
   }
 
   @Override
