@@ -32,7 +32,11 @@ public class VenueHireSystem {
     // Print the details of each venue
     for (Venue venue : venues) {
       MessageCli.VENUE_ENTRY.printMessage(
-          venue.getVenueName(), venue.getVenueCode(), venue.getCapacity(), venue.getHireFee());
+          venue.getVenueName(),
+          venue.getVenueCode(),
+          venue.getCapacity(),
+          venue.getHireFee(),
+          venue.getNextAvailablDate().toString());
     }
   }
 
@@ -92,6 +96,10 @@ public class VenueHireSystem {
 
     // If all validations passed, create the venue
     Venue newVenue = new Venue(venueName, venueCode, capacityInput, hireFeeInput);
+
+    // Set the next available date to the system date
+    newVenue.setNextAvailablDate(systemDate);
+
     venues.add(newVenue);
     MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
   }
@@ -113,7 +121,6 @@ public class VenueHireSystem {
 
   // Making a booking
   public void makeBooking(String[] options) {
-    // TODO implement this method
     // Check if the system date is set
     if (systemDate == null) {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
@@ -162,8 +169,11 @@ public class VenueHireSystem {
     // If all validations passed, create the booking
     Booking newBooking = new Booking(bookingVenue, bookingDate, options[2], options[3]);
 
-    bookings.add(newBooking);
+    if (bookingVenue.getNextAvailablDate() == null) {
+      bookingVenue.setNextAvailablDate(systemDate);
+    }
 
+    bookings.add(newBooking);
     MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
         newBooking.getBookingReference(),
         newBooking.getVenue().getVenueName(),
