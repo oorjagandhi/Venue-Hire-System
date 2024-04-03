@@ -29,8 +29,8 @@ public class Date {
         && this.day < otherDate.day) {
       return true;
     }
-    // Return true if the date is before
-    return true;
+    // Return false if the date is before
+    return false;
   }
 
   public boolean isEqual(Date otherDate) {
