@@ -222,12 +222,18 @@ public class VenueHireSystem {
     }
 
     // Print the bookings for the venue
+    boolean hasBooking = false;
     MessageCli.PRINT_BOOKINGS_HEADER.printMessage(foundVenue.getVenueName());
     for (Booking booking : bookings) {
       if (booking.getVenue().getVenueCode().equals(venueCode)) {
         MessageCli.PRINT_BOOKINGS_ENTRY.printMessage(
             booking.getBookingReference(), booking.getBookingDate().toString());
+        hasBooking = true;
       }
+    }
+
+    if (!hasBooking) {
+      MessageCli.PRINT_BOOKINGS_NONE.printMessage(foundVenue.getVenueName());
     }
   }
 
