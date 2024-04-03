@@ -1,11 +1,12 @@
 package nz.ac.auckland.se281;
 
+import java.util.ArrayList;
+
 public class Venue {
   private String venueName;
   private String venueCode;
   private String capacity;
   private String hireFee;
-  private Date nextAvailablDate;
 
   public Venue(String venueName, String venueCode, String capacity, String hireFee) {
     this.venueName = venueName;
@@ -30,11 +31,21 @@ public class Venue {
     return hireFee;
   }
 
-  public void setNextAvailablDate(Date nextAvailablDate) {
-    this.nextAvailablDate = nextAvailablDate;
-  }
+  public Date getNextAvailableDate(ArrayList<Booking> bookings, Date systemDate) {
+    Date nextAvailableDate = systemDate;
+    ArrayList<Date> venueBookingDates = new ArrayList<Date>();
 
-  public Date getNextAvailablDate() {
-    return nextAvailablDate;
+    for (Booking venueBooking : bookings) {
+      if (venueBooking.getVenue().getVenueCode().equals(this.venueCode)) {
+        venueBookingDates.add(venueBooking.getBookingDate());
+      }
+    }
+
+    for (Date bookingDate : venueBookingDates) {
+      if (bookingDate.isEqual(systemDate)) {
+        nextAvailableDate = nextAvailableDate.increment();
+      }
+    }
+    return nextAvailableDate;
   }
 }
