@@ -156,7 +156,8 @@ public class VenueHireSystem {
 
     // Check if the booking date is already booked
     for (Booking booking : bookings) {
-      if (booking.getBookingDate().isEqual(bookingDate)) {
+      if (booking.getVenue().getVenueCode().equals(options[0])
+          && booking.getBookingDate().isEqual(bookingDate)) {
         MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(
             bookingVenue.getVenueName(), bookingDate.toString());
         return;
@@ -165,15 +166,6 @@ public class VenueHireSystem {
 
     // If all validations passed, create the booking
     Booking newBooking = new Booking(bookingVenue, bookingDate, options[2], options[3]);
-
-    // Check if there is a booking existing on the system date
-    for (Booking booking : bookings) {
-      if (booking.getBookingDate().isEqual(systemDate)) {
-        MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(
-            booking.getVenue().getVenueName(), systemDate.toString());
-        return;
-      }
-    }
 
     bookings.add(newBooking);
     MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
