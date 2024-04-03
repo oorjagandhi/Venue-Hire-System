@@ -199,8 +199,7 @@ public class VenueHireSystem {
   }
 
   public void printBookings(String venueCode) {
-    // TODO implement this method
-
+    // Check if there are venues
     Venue foundVenue = null;
     for (Venue venue : venues) {
       if (venue.getVenueCode().equals(venueCode)) {
@@ -209,15 +208,26 @@ public class VenueHireSystem {
       }
     }
 
+    // If the venue code does not exist, print error message.
     if (foundVenue == null) {
       MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
       return;
     }
 
+    // If there are no bookings for the venue, print message
     if (bookings.isEmpty()) {
       MessageCli.PRINT_BOOKINGS_HEADER.printMessage(foundVenue.getVenueName());
       MessageCli.PRINT_BOOKINGS_NONE.printMessage(foundVenue.getVenueName());
       return;
+    }
+
+    // Print the bookings for the venue
+    MessageCli.PRINT_BOOKINGS_HEADER.printMessage(foundVenue.getVenueName());
+    for (Booking booking : bookings) {
+      if (booking.getVenue().getVenueCode().equals(venueCode)) {
+        MessageCli.PRINT_BOOKINGS_ENTRY.printMessage(
+            booking.getBookingReference(), booking.getBookingDate().toString());
+      }
     }
   }
 
