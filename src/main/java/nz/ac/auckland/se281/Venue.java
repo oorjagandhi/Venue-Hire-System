@@ -5,7 +5,7 @@ public class Venue {
   private String venueCode;
   private String capacity;
   private String hireFee;
-  private Date venueDate;
+  private Date nextAvailablDate;
 
   public Venue(String venueName, String venueCode, String capacity, String hireFee) {
     this.venueName = venueName;
@@ -28,5 +28,13 @@ public class Venue {
 
   public String getHireFee() {
     return hireFee;
+  }
+
+  public void setNextAvailablDate(Date nextAvailablDate) {
+    this.nextAvailablDate = nextAvailablDate;
+  }
+
+  public Date getNextAvailablDate() {
+    return nextAvailablDate;
   }
 }
