@@ -215,6 +215,7 @@ public class VenueHireSystem {
     }
 
     if (bookings.isEmpty()) {
+      MessageCli.PRINT_BOOKINGS_HEADER.printMessage(foundVenue.getVenueName());
       MessageCli.PRINT_BOOKINGS_NONE.printMessage(foundVenue.getVenueName());
       return;
     }
