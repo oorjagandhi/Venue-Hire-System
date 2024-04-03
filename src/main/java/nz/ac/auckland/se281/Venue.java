@@ -32,6 +32,10 @@ public class Venue {
   }
 
   public Date getNextAvailableDate(ArrayList<Booking> bookings, Date systemDate) {
+    if (systemDate == null) {
+      return null;
+    }
+
     Date nextAvailableDate = systemDate;
     boolean isAvailable;
 
