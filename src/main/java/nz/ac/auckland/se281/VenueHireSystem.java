@@ -36,7 +36,7 @@ public class VenueHireSystem {
           venue.getVenueCode(),
           venue.getCapacity(),
           venue.getHireFee(),
-          venue.getNextAvailablDate().toString());
+          venue.getNextAvailableDate(bookings, systemDate).toString());
     }
   }
 
@@ -96,9 +96,6 @@ public class VenueHireSystem {
 
     // If all validations passed, create the venue
     Venue newVenue = new Venue(venueName, venueCode, capacityInput, hireFeeInput);
-
-    // Set the next available date to the system date
-    newVenue.setNextAvailablDate(systemDate);
 
     venues.add(newVenue);
     MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
@@ -169,8 +166,13 @@ public class VenueHireSystem {
     // If all validations passed, create the booking
     Booking newBooking = new Booking(bookingVenue, bookingDate, options[2], options[3]);
 
-    if (bookingVenue.getNextAvailablDate() == null) {
-      bookingVenue.setNextAvailablDate(systemDate);
+    // Check if there is a booking existing on the system date
+    for (Booking booking : bookings) {
+      if (booking.getBookingDate().isEqual(systemDate)) {
+        MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(
+            booking.getVenue().getVenueName(), systemDate.toString());
+        return;
+      }
     }
 
     bookings.add(newBooking);
