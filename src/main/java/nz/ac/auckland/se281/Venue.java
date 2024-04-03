@@ -33,17 +33,26 @@ public class Venue {
 
   public Date getNextAvailableDate(ArrayList<Booking> bookings, Date systemDate) {
     Date nextAvailableDate = systemDate;
-    ArrayList<Date> venueBookingDates = new ArrayList<Date>();
+    boolean isAvailable;
 
-    for (Booking venueBooking : bookings) {
-      if (venueBooking.getVenue().getVenueCode().equals(this.venueCode)) {
-        venueBookingDates.add(venueBooking.getBookingDate());
+    // While loop to find the next available date, will break when date found
+    while (true) {
+      // Assume the date is available until found otherwise
+      isAvailable = true;
+
+      // Iterate over each booking
+      for (Booking booking : bookings) {
+        // Check if the booking belongs to this venue and matches the date
+        if (this.venueCode.equals(booking.getVenue().getVenueCode())
+            && booking.getBookingDate().isEqual(nextAvailableDate)) {
+          nextAvailableDate = nextAvailableDate.increment();
+          isAvailable = false;
+          break;
+        }
       }
-    }
 
-    for (Date bookingDate : venueBookingDates) {
-      if (bookingDate.isEqual(systemDate)) {
-        nextAvailableDate = nextAvailableDate.increment();
+      if (isAvailable) {
+        break;
       }
     }
     return nextAvailableDate;
