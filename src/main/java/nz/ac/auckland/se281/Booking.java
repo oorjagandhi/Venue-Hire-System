@@ -8,11 +8,11 @@ public class Booking {
   private int attendees;
   private String bookingReference;
 
-  public Booking(Venue venue, Date bookingDate, String customerEmail, String attendees) {
+  public Booking(Venue venue, Date bookingDate, String customerEmail, int attendees) {
     this.venue = venue;
     this.bookingDate = bookingDate;
     this.customerEmail = customerEmail;
-    this.attendees = Integer.parseInt(attendees);
+    this.attendees = attendees;
     this.bookingReference = BookingReferenceGenerator.generateBookingReference();
   }
 
