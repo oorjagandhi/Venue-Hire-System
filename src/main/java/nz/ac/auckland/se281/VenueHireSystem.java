@@ -350,5 +350,8 @@ public class VenueHireSystem {
       MessageCli.INVOICE_CONTENT_FLORAL_ENTRY.printMessage(
           booking.getFloral().getName(), Integer.toString(booking.getFloral().getCost()));
     }
+
+    // Print the bottom half of the invoice
+    MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage(Integer.toString(totalCost));
   }
 }
