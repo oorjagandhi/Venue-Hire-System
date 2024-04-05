@@ -260,8 +260,7 @@ public class VenueHireSystem {
   }
 
   public void addServiceMusic(String bookingReference) {
-    // TODO implement this method
-
+    // Find the booking by reference
     Booking booking = null;
     for (Booking b : bookings) {
       if (b.getBookingReference().equals(bookingReference)) {
@@ -282,7 +281,21 @@ public class VenueHireSystem {
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
-    // TODO implement this method
+    // Find the booking by reference
+    System.out.println("hi1");
+    Booking booking = null;
+    for (Booking b : bookings) {
+      if (b.getBookingReference().equals(bookingReference)) {
+        booking = b;
+        break;
+      }
+    }
+    System.out.println("hi2");
+    // If the booking is not found, print error message
+    if (booking == null) {
+      MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Floral", bookingReference);
+      return;
+    }
   }
 
   public void viewInvoice(String bookingReference) {
