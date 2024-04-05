@@ -257,7 +257,8 @@ public class VenueHireSystem {
 
     // If the booking is found, add the catering service
     booking.setCatering(cateringType);
-    MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(cateringType.getName(), bookingReference);
+    MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
+        "Catering (" + cateringType.getName() + ")", bookingReference);
   }
 
   public void addServiceMusic(String bookingReference) {
