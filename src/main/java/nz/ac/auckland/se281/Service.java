@@ -12,4 +12,6 @@ public abstract class Service {
   }
 
   public abstract void addToBooking(Booking booking);
+
+  public abstract void printSuccessMessage(String bookingReference);
 }
