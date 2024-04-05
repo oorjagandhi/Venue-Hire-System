@@ -252,7 +252,12 @@ public class VenueHireSystem {
     // If the booking is not found, print error message
     if (booking == null) {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Catering", bookingReference);
+      return;
     }
+
+    // If the booking is found, add the catering service
+    booking.setCatering(cateringType);
+    MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(cateringType.getName(), bookingReference);
   }
 
   public void addServiceMusic(String bookingReference) {
