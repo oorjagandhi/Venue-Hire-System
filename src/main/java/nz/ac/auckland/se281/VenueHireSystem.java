@@ -302,6 +302,30 @@ public class VenueHireSystem {
   }
 
   public void viewInvoice(String bookingReference) {
-    // TODO implement this method
+    int totalCost = 0;
+
+    // Find the booking by reference
+    Booking booking = null;
+    for (Booking b : bookings) {
+      if (b.getBookingReference().equals(bookingReference)) {
+        booking = b;
+        break;
+      }
+    }
+    // If the booking is not found, print error message
+    if (booking == null) {
+      MessageCli.VIEW_INVOICE_BOOKING_NOT_FOUND.printMessage(bookingReference);
+      return;
+    }
+
+    // Print the invoice header content
+    totalCost += Integer.parseInt(booking.getVenue().getHireFee());
+    MessageCli.INVOICE_CONTENT_TOP_HALF.printMessage(
+        booking.getBookingReference(),
+        booking.getCustomerEmail(),
+        booking.getBookingDate().toString(),
+        booking.getBookingDate().toString(),
+        Integer.toString(booking.getAttendees()),
+        booking.getVenue().getVenueName());
   }
 }
