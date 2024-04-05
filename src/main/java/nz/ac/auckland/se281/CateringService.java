@@ -14,4 +14,10 @@ public class CateringService extends Service {
   public void addToBooking(Booking booking) {
     booking.setCatering(type);
   }
+
+  @Override
+  public void printSuccessMessage(String bookingReference) {
+    MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
+        "Catering (" + type.getName() + ")", bookingReference);
+  }
 }
