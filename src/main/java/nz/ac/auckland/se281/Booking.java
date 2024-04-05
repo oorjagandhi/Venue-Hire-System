@@ -1,5 +1,6 @@
 package nz.ac.auckland.se281;
 
+import java.util.ArrayList;
 import nz.ac.auckland.se281.Types.CateringType;
 
 public class Booking {
@@ -9,7 +10,7 @@ public class Booking {
   private String customerEmail;
   private int attendees;
   private String bookingReference;
-  private CateringType catering;
+  private ArrayList<CateringType> cateringList = new ArrayList<CateringType>();
 
   public Booking(Venue venue, Date bookingDate, String customerEmail, int attendees) {
     this.venue = venue;
@@ -39,11 +40,11 @@ public class Booking {
     return bookingReference;
   }
 
-  public CateringType getCatering() {
-    return catering;
+  public void addCatering(CateringType catering) {
+    cateringList.add(catering);
   }
 
-  public void setCatering(CateringType catering) {
-    this.catering = catering;
+  public ArrayList<CateringType> getCateringList() {
+    return cateringList;
   }
 }
