@@ -275,6 +275,10 @@ public class VenueHireSystem {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Music", bookingReference);
       return;
     }
+
+    // If the booking is found, add the catering service
+    booking.addMusicService();
+    MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Music", bookingReference);
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
