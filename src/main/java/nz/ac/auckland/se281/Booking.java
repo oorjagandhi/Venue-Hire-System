@@ -1,5 +1,7 @@
 package nz.ac.auckland.se281;
 
+import nz.ac.auckland.se281.Types.CateringType;
+
 public class Booking {
 
   private Venue venue;
@@ -7,6 +9,7 @@ public class Booking {
   private String customerEmail;
   private int attendees;
   private String bookingReference;
+  private CateringType catering;
 
   public Booking(Venue venue, Date bookingDate, String customerEmail, int attendees) {
     this.venue = venue;
@@ -34,5 +37,13 @@ public class Booking {
 
   public String getBookingReference() {
     return bookingReference;
+  }
+
+  public CateringType getCatering() {
+    return catering;
+  }
+
+  public void setCatering(CateringType catering) {
+    this.catering = catering;
   }
 }
