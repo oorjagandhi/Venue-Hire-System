@@ -1,6 +1,7 @@
 package nz.ac.auckland.se281;
 
 import nz.ac.auckland.se281.Types.CateringType;
+import nz.ac.auckland.se281.Types.FloralType;
 
 public class Booking {
 
@@ -11,6 +12,7 @@ public class Booking {
   private String bookingReference;
   private CateringType catering;
   private boolean hasMusicService;
+  private FloralType floral;
 
   public Booking(Venue venue, Date bookingDate, String customerEmail, int attendees) {
     this.venue = venue;
@@ -54,5 +56,13 @@ public class Booking {
 
   public boolean hasMusicService() {
     return hasMusicService;
+  }
+
+  public FloralType getFloral() {
+    return floral;
+  }
+
+  public void setFloral(FloralType floral) {
+    this.floral = floral;
   }
 }
