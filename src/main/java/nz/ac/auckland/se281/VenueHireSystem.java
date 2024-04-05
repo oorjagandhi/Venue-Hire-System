@@ -327,5 +327,28 @@ public class VenueHireSystem {
         booking.getBookingDate().toString(),
         Integer.toString(booking.getAttendees()),
         booking.getVenue().getVenueName());
+    // Print the venue fee
+    MessageCli.INVOICE_CONTENT_VENUE_FEE.printMessage(booking.getVenue().getHireFee());
+
+    // Print the catering fee, if any
+    if (booking.getCatering() != null) {
+      int cateringCost = booking.getCatering().getCostPerPerson() * booking.getAttendees();
+      totalCost += cateringCost;
+      MessageCli.INVOICE_CONTENT_CATERING_ENTRY.printMessage(
+          booking.getCatering().getName(), Integer.toString(cateringCost));
+    }
+
+    // Print music fee, if any
+    if (booking.hasMusicService()) {
+      totalCost += 500;
+      MessageCli.INVOICE_CONTENT_MUSIC_ENTRY.printMessage("500");
+    }
+
+    // Print floral fee, if any
+    if (booking.getFloral() != null) {
+      totalCost += booking.getFloral().getCost();
+      MessageCli.INVOICE_CONTENT_FLORAL_ENTRY.printMessage(
+          booking.getFloral().getName(), Integer.toString(booking.getFloral().getCost()));
+    }
   }
 }
