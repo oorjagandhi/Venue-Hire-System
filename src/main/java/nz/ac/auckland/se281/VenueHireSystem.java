@@ -238,8 +238,6 @@ public class VenueHireSystem {
   }
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
-    // TODO implement this method
-
     // Find the booking by reference
     Booking booking = null;
     for (Booking b : bookings) {
@@ -263,6 +261,20 @@ public class VenueHireSystem {
 
   public void addServiceMusic(String bookingReference) {
     // TODO implement this method
+
+    Booking booking = null;
+    for (Booking b : bookings) {
+      if (b.getBookingReference().equals(bookingReference)) {
+        booking = b;
+        break;
+      }
+    }
+
+    // If the booking is not found, print error message
+    if (booking == null) {
+      MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Music", bookingReference);
+      return;
+    }
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
