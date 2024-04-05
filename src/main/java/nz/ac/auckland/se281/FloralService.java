@@ -14,4 +14,10 @@ public class FloralService extends Service {
   public void addToBooking(Booking booking) {
     booking.setFloral(floralType);
   }
+
+  @Override
+  public void printSuccessMessage(String bookingReference) {
+    MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
+        "Floral (" + floralType.getName() + ")", bookingReference);
+  }
 }
