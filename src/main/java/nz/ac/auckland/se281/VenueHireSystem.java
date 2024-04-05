@@ -276,8 +276,9 @@ public class VenueHireSystem {
     }
 
     // If the booking is found, add the catering service
-    booking.addMusicService();
-    MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Music", bookingReference);
+    MusicService musicService = new MusicService();
+    musicService.addToBooking(booking);
+    musicService.printSuccessMessage(bookingReference);
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
@@ -295,17 +296,9 @@ public class VenueHireSystem {
       return;
     }
 
-    // If floralType is standard, add the standard
-    if (floralType == FloralType.STANDARD) {
-      booking.setFloral(floralType);
-      MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
-          "Floral (" + floralType.getName() + ")", bookingReference);
-    } else {
-      // If floralType is deluxe, add the deluxe
-      booking.setFloral(floralType);
-      MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
-          "Floral (" + floralType.getName() + ")", bookingReference);
-    }
+    FloralService floralService = new FloralService(floralType);
+    floralService.addToBooking(booking);
+    floralService.printSuccessMessage(bookingReference);
   }
 
   public void viewInvoice(String bookingReference) {
