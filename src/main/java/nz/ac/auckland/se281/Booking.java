@@ -10,6 +10,7 @@ public class Booking {
   private int attendees;
   private String bookingReference;
   private CateringType catering;
+  private boolean hasMusicService;
 
   public Booking(Venue venue, Date bookingDate, String customerEmail, int attendees) {
     this.venue = venue;
@@ -45,5 +46,13 @@ public class Booking {
 
   public void setCatering(CateringType catering) {
     this.catering = catering;
+  }
+
+  public void addMusicService() {
+    hasMusicService = true;
+  }
+
+  public boolean hasMusicService() {
+    return hasMusicService;
   }
 }
