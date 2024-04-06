@@ -188,7 +188,7 @@ public class VenueHireSystem {
     }
 
     // If all validations passed, create the booking
-    Booking newBooking = new Booking(bookingVenue, bookingDate, options[2], attendees);
+    Booking newBooking = new Booking(bookingVenue, bookingDate, options[2], attendees, systemDate);
 
     bookings.add(newBooking);
     MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
@@ -323,7 +323,7 @@ public class VenueHireSystem {
     MessageCli.INVOICE_CONTENT_TOP_HALF.printMessage(
         booking.getBookingReference(),
         booking.getCustomerEmail(),
-        booking.getBookingDate().toString(),
+        booking.getBookingCreationDate().toString(),
         booking.getBookingDate().toString(),
         Integer.toString(booking.getAttendees()),
         booking.getVenue().getVenueName());
