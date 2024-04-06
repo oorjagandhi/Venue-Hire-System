@@ -10,16 +10,23 @@ public class Booking {
   private String customerEmail;
   private int attendees;
   private String bookingReference;
+  private Date bookingCreationDate;
   private CateringType catering;
   private boolean hasMusicService;
   private FloralType floral;
 
-  public Booking(Venue venue, Date bookingDate, String customerEmail, int attendees) {
+  public Booking(
+      Venue venue,
+      Date bookingDate,
+      String customerEmail,
+      int attendees,
+      Date bookingCreationDate) {
     this.venue = venue;
     this.bookingDate = bookingDate;
     this.customerEmail = customerEmail;
     this.attendees = attendees;
     this.bookingReference = BookingReferenceGenerator.generateBookingReference();
+    this.bookingCreationDate = bookingCreationDate;
   }
 
   public Venue getVenue() {
@@ -64,5 +71,9 @@ public class Booking {
 
   public void setFloral(FloralType floral) {
     this.floral = floral;
+  }
+
+  public Date getBookingCreationDate() {
+    return bookingCreationDate;
   }
 }
