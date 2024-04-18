@@ -14,8 +14,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
   MainTest.Task1.class,
-  // MainTest.Task2.class,
-  // MainTest.Task3.class,
+  MainTest.Task2.class,
+  MainTest.Task3.class,
   MainTest.YourTests.class, // Uncomment this line to run your own tests
 })
 public class MainTest {
@@ -222,6 +222,248 @@ public class MainTest {
         System.out.println();
         assertContains("Venue not created: capacity must be a positive number.");
         assertDoesNotContain("Successfully created venue", true);
+      }
+
+      @Test
+      public void T2_17_make_booking_venue_code_nonexisistant() throws Exception {
+        runCommands(
+            unpack(
+                CREATE_TEN_VENUES,
+                SET_DATE,
+                "26/02/2024", //
+                MAKE_BOOKING,
+                options("meow", "27/02/2024", "client001@email.com", "230")));
+
+        assertContains("Booking not made: there is no venue with code 'meow");
+        assertDoesNotContain("Successfully created booking", true);
+      }
+
+      @Test
+      public void T2_18_make_booking_date_in_past() throws Exception {
+        runCommands(
+            unpack(
+                CREATE_TEN_VENUES,
+                SET_DATE,
+                "26/02/2024", //
+                MAKE_BOOKING,
+                options("GGG", "25/02/2024", "client001@email.com", "230")));
+
+        assertContains(
+            "Booking not made: '25/02/2024' is in the past (system date is 26/02/2024).");
+        assertDoesNotContain("Successfully created booking", true);
+      }
+
+      @Test
+      public void T2_19_make_booking_too_many_attendees() throws Exception {
+        runCommands(
+            unpack(
+                CREATE_TEN_VENUES,
+                SET_DATE,
+                "26/02/2024", //
+                MAKE_BOOKING,
+                options("GGG", "28/05/2024", "client999@email.com", "400")));
+
+        assertContains(
+            "Number of attendees adjusted from 400 to 260, as the venue capacity is 260.");
+        assertContains("Successfully created booking 'HUD14D8O'");
+        assertDoesNotContain("Booking not made", true);
+      }
+
+      @Test
+      public void T2_20_booking_next_available_date_after_making_bookings_tooday_then_5days_away()
+          throws Exception {
+        runCommands(
+            unpack(
+                CREATE_TEN_VENUES, //
+                SET_DATE,
+                "03/02/2024", //
+                MAKE_BOOKING,
+                options("GGG", "03/02/2024", "client001@email.com", "230"),
+                MAKE_BOOKING,
+                options("GGG", "08/02/2024", "client001@email.com", "230"),
+                PRINT_VENUES));
+
+        assertContains(
+            "Grand Gala Gardens (GGG) - 260 people - $1500 base hire fee. Next available on"
+                + " 04/02/2024");
+        assertDoesNotContain(
+            "Grand Gala Gardens (GGG) - 260 people - $1500 base hire fee. Next available on"
+                + " 09/02/2024");
+      }
+
+      @Test
+      public void T2_21_next_available_date_whenn_system_date_moved_no_bookings() throws Exception {
+        runCommands(
+            unpack(
+                CREATE_TEN_VENUES, //
+                SET_DATE,
+                "01/01/2024", //
+                PRINT_VENUES,
+                SET_DATE,
+                "20/01/2024", //
+                PRINT_VENUES));
+
+        assertContains(
+            "Grand Gala Gardens (GGG) - 260 people - $1500 base hire fee. Next available on"
+                + " 01/01/2024");
+        assertContains(
+            "Grand Gala Gardens (GGG) - 260 people - $1500 base hire fee. Next available on"
+                + " 20/01/2024");
+      }
+
+      @Test
+      public void T2_22_next_available_date_whenn_system_date_moved_with_bookings()
+          throws Exception {
+        runCommands(
+            unpack(
+                CREATE_TEN_VENUES, //
+                SET_DATE,
+                "01/01/2024", //
+                PRINT_VENUES,
+                MAKE_BOOKING,
+                options("GGG", "27/01/2024", "client001@email.com", "230"),
+                SET_DATE,
+                "27/01/2024", //
+                PRINT_VENUES));
+
+        assertContains(
+            "Grand Gala Gardens (GGG) - 260 people - $1500 base hire fee. Next available on"
+                + " 01/01/2024");
+        assertContains(
+            "Grand Gala Gardens (GGG) - 260 people - $1500 base hire fee. Next available on"
+                + " 28/01/2024");
+      }
+
+      @Test
+      public void T2_23_no_venues_in_system() throws Exception {
+        runCommands(PRINT_BOOKINGS, "GGG");
+
+        assertContains("Nothing to print: there is no venue with code 'GGG'.");
+      }
+
+      @Test
+      public void T3_24_add_musicservice_booking_does_not_exist() throws Exception {
+        runCommands(
+            unpack(
+                CREATE_TEN_VENUES,
+                SET_DATE,
+                "26/02/2024", //
+                MAKE_BOOKING,
+                options("GGG", "27/03/2024", "client001@email.com", "230"), //
+                ADD_MUSIC,
+                "abc"));
+
+        assertContains(
+            "Music service not added: there is no booking with reference 'abc' in the"
+                + " system.");
+        assertDoesNotContain("Successfully added", true);
+      }
+
+      @Test
+      public void T3_25_add_music_service_total_printed() throws Exception {
+        runCommands(
+            unpack(
+                CREATE_TEN_VENUES,
+                SET_DATE,
+                "26/02/2024", //
+                MAKE_BOOKING,
+                options("GGG", "27/03/2024", "client001@email.com", "230"), //
+                ADD_MUSIC,
+                "HUD14D8O",
+                VIEW_INVOICE,
+                "HUD14D8O"));
+
+        assertContains("Successfully added Music service to booking 'HUD14D8O'.");
+        assertContains("* Music - $500");
+        assertContains("Total Amount: $2000");
+        assertDoesNotContain("not added", true);
+      }
+
+      @Test
+      public void T3_25_add_floral_service_booking_does_not_exist() throws Exception {
+        runCommands(
+            unpack(
+                CREATE_TEN_VENUES,
+                SET_DATE,
+                "26/02/2024", //
+                MAKE_BOOKING,
+                options("GGG", "27/03/2024", "client001@email.com", "230"), //
+                ADD_FLORAL,
+                "abc",
+                options("n")));
+
+        assertContains(
+            "Floral service not added: there is no booking with reference 'abc' in the"
+                + " system.");
+        assertDoesNotContain("Successfully added", true);
+      }
+
+      @Test
+      public void T3_26_add_floral_service_entry_printed() throws Exception {
+        runCommands(
+            unpack(
+                CREATE_TEN_VENUES,
+                SET_DATE,
+                "26/02/2024", //
+                MAKE_BOOKING,
+                options("GGG", "27/03/2024", "client001@email.com", "230"), //
+                ADD_FLORAL,
+                "HUD14D8O",
+                options("n"),
+                VIEW_INVOICE,
+                "HUD14D8O"));
+
+        assertContains("Successfully added Floral (Standard) service to booking 'HUD14D8O'.");
+        assertContains("* Floral (Standard) - $550");
+        assertDoesNotContain("not added", true);
+      }
+
+      @Test
+      public void T3_27_add_floral_service_deluxe() throws Exception {
+        runCommands(
+            unpack(
+                CREATE_TEN_VENUES,
+                SET_DATE,
+                "26/02/2024", //
+                MAKE_BOOKING,
+                options("GGG", "27/03/2024", "client001@email.com", "230"), //
+                ADD_FLORAL,
+                "HUD14D8O",
+                options("y"),
+                VIEW_INVOICE,
+                "HUD14D8O"));
+
+        assertContains("Successfully added Floral (Deluxe) service to booking 'HUD14D8O'.");
+        assertContains("* Floral (Deluxe) - $1000");
+        assertDoesNotContain("not added", true);
+      }
+
+      @Test
+      public void T3_28_invoice_details_booking_does_not_exist() throws Exception {
+        runCommands(
+            unpack(
+                CREATE_TEN_VENUES,
+                SET_DATE,
+                "26/02/2024", //
+                MAKE_BOOKING,
+                options("FFH", "27/07/2024", "client001@email.com", "20"), //
+                VIEW_INVOICE,
+                "abc"));
+
+        assertContains("Invoice not printed: there is no booking with reference");
+      }
+
+      @Test
+      public void T3_29_invoice_details_no_bookings() throws Exception {
+        runCommands(
+            unpack(
+                CREATE_TEN_VENUES,
+                SET_DATE,
+                "26/02/2024", //
+                VIEW_INVOICE,
+                "abc"));
+
+        assertContains("Invoice not printed: there is no booking with reference");
       }
     }
   }
