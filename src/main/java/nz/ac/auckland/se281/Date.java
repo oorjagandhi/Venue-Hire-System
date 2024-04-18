@@ -55,16 +55,20 @@ public class Date {
     return new Date(this.day + 1, this.month, this.year);
   }
 
+  // toString method to return the date in the format dd/mm/yyyy
   @Override
   public String toString() {
 
+    // Checking if the day and month are less than 10
     if (day < 10 && month < 10) {
       return "0" + day + "/0" + month + "/" + year;
     }
+    // Checking if the day is less than 10
     if (day < 10) {
       return "0" + day + "/" + month + "/" + year;
     }
 
+    // Checking if the month is less than 10
     if (month < 10) {
       return day + "/0" + month + "/" + year;
     }
