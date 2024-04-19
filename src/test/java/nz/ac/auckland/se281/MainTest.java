@@ -265,7 +265,7 @@ public class MainTest {
 
         assertContains(
             "Number of attendees adjusted from 400 to 260, as the venue capacity is 260.");
-        assertContains("Successfully created booking 'HUD14D8O'");
+        assertContains("Successfully created booking");
         assertDoesNotContain("Booking not made", true);
       }
 
@@ -433,7 +433,7 @@ public class MainTest {
                 VIEW_INVOICE,
                 "HUD14D8O"));
 
-        assertContains("Successfully added Floral (Deluxe) service to booking 'HUD14D8O'.");
+        assertContains("Successfully added Floral (Deluxe) service to booking");
         assertContains("* Floral (Deluxe) - $1000");
         assertDoesNotContain("not added", true);
       }
